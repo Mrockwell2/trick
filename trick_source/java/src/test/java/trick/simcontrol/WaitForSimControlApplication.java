@@ -105,9 +105,22 @@ public class WaitForSimControlApplication extends SimControlApplication {
 		controller.waitForIdle();
 	}
 
-	private void selectComponent(Component comp) {
+	public void selectComponent(Component comp) {
 		controller.mouseClickAt(InputEvent.BUTTON1_DOWN_MASK, comp);
 		controller.waitForIdle();
+	}
+
+	public void selectComponent(String name) {
+		JFrame jf = getMainFrame();
+		Component[] components = jf.getComponents();
+
+		for(Component component : components) {
+			System.out.println(component.getName());
+			if(name.equals(component.getName())) {
+				selectComponent(component);
+				return;
+			}
+		}
 	}
 
 	//========================================
