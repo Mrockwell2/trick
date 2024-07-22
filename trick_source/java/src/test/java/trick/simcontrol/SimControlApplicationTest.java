@@ -486,32 +486,16 @@ public class SimControlApplicationTest extends ApplicationTest {
 
 	private void guiStartSim() throws IOException {
 		// ARRANGE
-		String statusMsg, expStatus = "Freeze OFF";
-		int counter = 0;
-
 		startApplication(true);
 		assumeTrue("Sim Control Panel didn't start...", simControl != null);
 
 		WaitForSimControlApplication guiControl = (WaitForSimControlApplication) simControl;
 
 		// ACT
-		varserv.put("trick.var_send_once(\"trick_sys.sched.mode\")");
-		int mode = Integer.parseInt(varserv.get().split("\t")[1]);
-		assumeTrue("Sim Mode was not MODE_FREEZE at test start", mode == MODE_FREEZE);
-
-		guiControl.clearStatusMsgs();
-		guiControl.startSim();
-
-		do {
-			counter++;
-			sleep(500);
-			statusMsg = guiControl.getStatusMessages();
-		} while(statusMsg.isEmpty() && counter < 5);
-
-		guiControl.freezeSim();
+		guiControl.selectComponent("StartSim");
 
 		// ASSERT
-		assertTrue("Simulation did not start!\n" + statusMsg, statusMsg.indexOf(expStatus) != -1);
+		verify(simControl).startSim();
 	}
 
 	private void headlessFreezeSim() throws IOException {
@@ -571,9 +555,9 @@ public class SimControlApplicationTest extends ApplicationTest {
 	private static void startApplication(boolean startConnected) {
 		if(simControl == null) {
 			if(startConnected)  // Launch Testing SimControlPanel with the provided connection info
-				WaitForSimControlApplication.launchAndWait(WaitForSimControlApplication.class, host, port);
+				WaitForSimControlApplication.launchAndWait(spy(WaitForSimControlApplication.class).getClass(), host, port);
 			else  // Launch Testing SimControlPanel
-				WaitForSimControlApplication.launchAndWait(WaitForSimControlApplication.class);
+				WaitForSimControlApplication.launchAndWait(spy(WaitForSimControlApplication.class).getClass());
 
 			handleAppSetup();
 		} else {

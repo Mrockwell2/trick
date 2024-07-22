@@ -364,7 +364,7 @@ public class SimControlApplication extends TrickApplication implements PropertyC
 	 * Sets all actions as either enabled or disabled
 	 * @param isEnabled the state to set each action as
 	 */
-	private void setEnabledAllActions(boolean isEnabled) {
+	protected void setEnabledAllActions(boolean isEnabled) {
 		if(actionMap == null)
 			return;
 		

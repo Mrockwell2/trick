@@ -82,6 +82,8 @@ public class WaitForSimControlApplication extends SimControlApplication {
     	}
     }
 
+	public void unlockCommands() { setEnabledAllActions(true); }
+
 	//========================================
     //    Robot Methods
     //========================================
