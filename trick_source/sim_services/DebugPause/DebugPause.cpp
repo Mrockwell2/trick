@@ -31,6 +31,7 @@ int Trick::DebugPause::debug_pause(Trick::JobData * curr_job) {
 
         // Pause for all job classes that are not initialization or for init jobs greater than phase 1.
         if ( target_job->job_class_name.compare("initialization") or target_job->phase > 1 ) {
+            the_exec->mode = Step;
 
             message_publish(MSG_NORMAL, "%12.6f pausing before %s\n" , exec_get_sim_time() ,
              target_job->name.c_str() ) ;

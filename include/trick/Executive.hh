@@ -21,6 +21,7 @@
 #include "SimObject.hh"
 #include "Threads.hh"
 #include "sim_mode.h"
+#include "DebugPause.hh"
 
 namespace Trick {
 
@@ -1336,6 +1337,8 @@ namespace Trick {
             /* SWIG doesn't like the Executive assignment operator because of ofstream init_log_stream */
             Executive& operator=(const Executive&); /* = delete; '= delete' is not compatible with SWIG 2.0.
                                                                   stick to 'private' for now */
+
+        friend int Trick::DebugPause::debug_pause(Trick::JobData * curr_job);
 
     } ;
 
