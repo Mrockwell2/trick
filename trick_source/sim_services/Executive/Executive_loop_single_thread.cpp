@@ -5,6 +5,9 @@
 
 #include "trick/Executive.hh"
 #include "trick/exec_proto.h"
+#include "trick/debug_pause_proto.h"
+#include "trick/message_proto.h"
+#include "trick/message_type.h"
 
 /**
 @details
@@ -41,6 +44,12 @@ int Trick::Executive::loop_single_thread() {
             exec_command = NoCmd;
             freeze_loop();
         }
+
+        // /* Set up debug_pause job or signal debug_pause semaphore if commanded to step */
+        // if (exec_command == StepCmd) {
+        //     exec_command = NoCmd;
+        //     debug_signal();
+        // }
 
         /* Call all top of frame jobs if the simulation time equals to the time software frame boundary. */
         if (time_tics == (next_frame_check_tics - software_frame_tics)) {
